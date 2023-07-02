@@ -38,10 +38,10 @@ sidebar.fill(GRAY)
 pygame.display.update()
 
 # стартовые настройки игры
-x, y = randrange(0, window_height, size), randrange(0, window_height, size)
-apple = randrange(0, window_height, size), randrange(0, window_height, size)
+x, y = randrange(0, 800, size), randrange(0, 800, size)
+apple = randrange(0, 800, size), randrange(0, 800, size)
 while apple == (x, y):
-    apple = randrange(0, window_height, size), randrange(0, window_height, size)
+    apple = randrange(0, 800, size), randrange(0, 800, size)
 length = 1
 snake = [(x, y)]
 #directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
@@ -80,25 +80,25 @@ while running:
         snake.pop(0)
 
     if snake[-1] == apple:
-        apple = randrange(0, window_height, size), randrange(0, window_height, size)
+        apple = randrange(0, 800, size), randrange(0, 800, size)
         while apple in snake:
-            apple = randrange(0, window_height, size), randrange(0, window_height, size)
+            apple = randrange(0, 800, size), randrange(0, 800, size)
         length += 1
 
-    if snake[-1][0] >= window_width or snake[-1][0] < 0 or snake[-1][1] >= window_height or snake[-1][1] < 0:
-        x, y = randrange(0, window_height, size), randrange(0, window_height, size)
-        apple = randrange(0, window_height, size), randrange(0, window_height, size)
+    if snake[-1][0] >= 800 or snake[-1][0] < 0 or snake[-1][1] >= 800 or snake[-1][1] < 0:
+        x, y = randrange(0, 800, size), randrange(0, 800, size)
+        apple = randrange(0, 800, size), randrange(0, 800, size)
         while apple == (x, y):
-            apple = randrange(0, window_height, size), randrange(0, window_height, size)
+            apple = randrange(0, 800, size), randrange(0, 800, size)
         length = 1
         snake = [(x, y)]
         dx, dy = 0, 0
 
     if snake[-1] in snake[0:-1]:
-        x, y = randrange(0, window_height, size), randrange(0, window_height, size)
-        apple = randrange(0, window_height, size), randrange(0, window_height, size)
+        x, y = randrange(0, 800, size), randrange(0, 800, size)
+        apple = randrange(0, 800, size), randrange(0, 800, size)
         while apple == (x, y):
-            apple = randrange(0, window_height, size), randrange(0, window_height, size)
+            apple = randrange(0, 800, size), randrange(0, 800, size)
         length = 1
         snake = [(x, y)]
         dx, dy = 0, 0
@@ -111,8 +111,9 @@ while running:
     end_index = 0
     for i, (x, y) in enumerate(snake):
         G = (0, randrange(200, 256), randrange(0, 56))
-        pygame.draw.rect(game_buffer, G, (x, y, size, size))
-    pygame.draw.rect(game_buffer, RED, (*apple, size, size))
+        pygame.draw.rect(game_buffer, G, (x + 1, y + 1, size - 2, size - 2))
+    draw_apple = tuple(coord + 1 for coord in apple)
+    pygame.draw.rect(game_buffer, RED, (*draw_apple, size - 2, size - 2))
 
     # Отображаем буферный холст на основном экране
     sc.fill(BLACK)
